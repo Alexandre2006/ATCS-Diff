@@ -39,6 +39,37 @@ public class PlagiarismCheckerTest {
         setTestData(4);
     }
 
+    @Test
+    public void testFindindAllStringsSmall() {
+        /** This should print two messages:
+         *      ABA
+         *      ABD
+         */
+        setTestData(5);
+    }
+
+    @Test
+    public void testFindindAllStringsLarger() {
+        /** This should print four messages:
+         *      A COT ALINE
+         *      A LOT ALINE
+         *      A COT ALIKE
+         *      A LOT ALIKE
+         */
+        setTestData(6);
+    }
+
+    @Test
+    public void allStringsMore() {
+        /** This should print four messages:
+         *      Menlo School's mission is to empower students to ee and expand their interests, ach their fullest potential, l the skills er for success in college, and become ethical, responsible, and engaged rs  ever wider communities.
+         *      Menlo School's mission is to empower students to ee and expand their interests, ach their fullest potential, l the skills ee for success in college, and become ethical, responsible, and engaged rs  ever wider communities.
+         *      Menlo School's mission is to empower students to ee and expand their interests, ach their fullest potential, d the skills er for success in college, and become ethical, responsible, and engaged rs  ever wider communities.
+         *      Menlo School's mission is to empower students to ee and expand their interests, ach their fullest potential, d the skills ee for success in college, and become ethical, responsible, and engaged rs  ever wider communities.
+         */
+        setTestData(7);
+    }
+
     private void setTestData(int testNumber) {
         // Open files
         try {
