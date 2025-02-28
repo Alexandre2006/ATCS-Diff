@@ -17,24 +17,38 @@ public class PlagiarismChecker {
      * @return The length of the longest shared substring.
      */
     public static int longestSharedSubstring(String doc1, String doc2) {
+        // Find the longest document
+        boolean isDoc1Longer = doc1.length() > doc2.length();
+
+        // Run the helper method with the longer document first
+        return isDoc1Longer ? longestSharedSubstringHelper(doc1, doc2) : longestSharedSubstringHelper(doc2, doc1);
+    }
+
+    private static int longestSharedSubstringHelper(String doc1, String doc2) {
+        boolean currentRow = false;
+
         // Create 2D array to store tabulation results
-        int[][] results = new int[doc1.length() + 1][doc2.length() + 1];
+        int[][] results = new int[2][doc1.length() + 1];
 
         // Iterate through all characters (in both docs)
-        for (int x = 1; x <= doc1.length(); x++) {
-            for (int y = 1; y <= doc2.length(); y++) {
+        for (int x = 1; x <= doc2.length(); x++) {
+            for (int y = 1; y <= doc1.length(); y++) {
                 // Check if characters at current indices are equal
-                if (doc1.charAt(x - 1) == doc2.charAt(y - 1)) {
+                if (doc2.charAt(x - 1) == doc1.charAt(y - 1)) {
                     // If they are equal, increment the previous result by 1
-                    results[x][y] = results[x - 1][y - 1] + 1;
+                    results[currentRow ? 1 : 0][y] = results[currentRow ? 0 : 1][y - 1] + 1;
                 } else {
                     // Otherwise, skip a character from either document, and find the max of the two
-                    results[x][y] = Math.max(results[x - 1][y], results[x][y - 1]);
+                    results[currentRow ? 1 : 0][y] = Math.max(results[currentRow ? 1 : 0][y - 1], results[currentRow ? 0 : 1][y]);
                 }
             }
+
+            // Switch the current row
+            currentRow = !currentRow;
         }
 
         // Return the length of the longest shared substring
-        return results[doc1.length()][doc2.length()];
+        return results[currentRow ? 0 : 1][doc1.length()];
+
     }
 }
